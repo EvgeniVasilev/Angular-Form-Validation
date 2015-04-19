@@ -1,83 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" data-ng-app="formApp">
+	<head>
+		<title>Angualr Form</title>
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+		<style type="text/css">			
+			.custom-error-class{
+				color: red;				
+				font-size: 12px;
+				position: absolute;	
+				-webkit-transition:all linear 0.5s;
+				transition:all linear 0.5s;
+				display: block;
+				width: 100%;
+			}	
 
-<head>
-	<title>Angualr Form</title>
-	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-	<style type="text/css">
-		.custom-error-class {
-			color: red;
-			font-size: 12px;
-			position: absolute;
-		}
-	</style>
-</head>
-
-<body data-ng-controller="formCtrl">
-	<div class="page-header">
+			.custom-error-class.ng-hide {
+				opacity:0;
+			}			
+		</style>
+	</head>
+	<body data-ng-controller="formCtrl">
+		<div class="page-header">
+			<div class="container">
+				<h2>Angular Guest Book Application</h2>
+				<button class="btn btn-primary" data-ng-click="guestBook()"><i class="glyphicon glyphicon-dashboard"></i>&nbsp;View Guest Book</button>
+			</div>
+		</div>
 		<div class="container">
-			<h2>Angular Form Validation</h2>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-			<form novalidate class="col-lg-4 col-md-5 col-xs-12" name="form" data-ng-submit="form.$valid && isValidForm()">
-				<div class="form-group">
-					<label>First Name:</label>
-					<input type="text" class="form-control" name="fName" data-ng-model="fName" required="" />
-					<!---first name error-->
-					<div data-ng-show="form.$submitted || form.fName.$touched">
-						<div data-ng-show="form.fName.$error.required" class="custom-error-class">Please, fill in the field!</div>
+			<div class="row">			
+				<form novalidate class="col-lg-4 col-md-5 col-xs-12" name="form" data-ng-submit="form.$valid && isValidForm()">
+				<h3>Register for Event</h3>
+					<div class="form-group">
+						<label>First Name:</label>
+						<input type="text" class="form-control" name="fName" data-ng-model="fName" required="" autocomplete="off"/>
+						<!---first name error-->
+						<div data-ng-show="form.$submitted || form.fName.$touched" class="custom-error-class">
+							<div data-ng-show="form.fName.$error.required" class="custom-error-class">Please, fill in the field!</div>
+						</div>
+						<!---first name error-->
 					</div>
-					<!---first name error-->
-				</div>
-				<div class="form-group">
-					<label>Second Name:</label>
-					<input type="text" class="form-control" name="sName" data-ng-model="sName" required="" />
-					<!---second name error-->
-					<div data-ng-show="form.$submitted || form.sName.$touched">
-						<div data-ng-show="form.sName.$error.required" class="custom-error-class">Please, fill in the field!</div>
+					<div class="form-group">
+						<label>Second Name:</label>
+						<input type="text" class="form-control" name="sName" data-ng-model="sName" required="" autocomplete="off"/>
+						<!---second name error-->
+						<div data-ng-show="form.$submitted || form.sName.$touched" class="custom-error-class">
+							<div data-ng-show="form.sName.$error.required" class="custom-error-class">Please, fill in the field!</div>
+						</div>
+						<!---second name error-->
 					</div>
-					<!---second name error-->
-				</div>
-				<div class="form-group">
-					<label>E-mail:</label>
-					<input type="email" class="form-control" data-ng-model="email" name="uemail" required="" />
-					<!---email error-->
-					<div data-ng-show="form.$submitted || form.uemail.$touched">
-						<div data-ng-show="form.uemail.$error.required" class="custom-error-class">Please, fill in the field!</div>
-						<div data-ng-show="form.uemail.$error.email" class="custom-error-class">Please, fill in the field a valid e-mail!</div>
+					<div class="form-group">
+						<label>E-mail:</label>
+						<input type="email" class="form-control" data-ng-model="email" name="uemail" required="" autocomplete="off"/>
+						<!---email error-->
+						<div data-ng-show="form.$submitted || form.uemail.$touched" class="custom-error-class">
+							<div data-ng-show="form.uemail.$error.required" class="custom-error-class">Please, fill in the field!</div>
+							<div data-ng-show="form.uemail.$error.email" class="custom-error-class">Please, fill in the field a valid e-mail!</div>
+						</div>
+						<!---email error-->
 					</div>
-					<!---email error-->
+					<div class="form-group">
+						<label>
+							<input type="checkbox" name="uagree" data-ng-model="user.agree" required=""/>&nbsp;Accept Terms and Conditions</label>
+							<div data-ng-show="form.$submitted" class="custom-error-class">
+								<div data-ng-show="!user.agree" class="custom-error-class">Please accept terms and conditions!</div>
+							</div>
+						</div>
+						<br/>
+						<div class="form-group">
+							<input type="submit" class="btn btn-danger form-control" value="Send" />
+						</div>
+					</form>
 				</div>
-				<div class="form-group">
-					<label>
-						<input type="checkbox" name="uagree" data-ng-model="user.agree" required="" />&nbsp;Accept Terms and Conditions</label>
-					<div data-ng-show="form.$submitted">
-						<div data-ng-show="!user.agree" class="custom-error-class">Please accept terms and conditions!</div>
-					</div>
-				</div>
-				<br/>
-				<div class="form-group">
-					<input type="submit" class="btn btn-danger form-control" value="Send" />
-				</div>
-			</form>
-		</div>
-	</div>
-	<!--scripts-->
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-	<script type="text/javascript">
-		var formApp = angular.module("formApp", []);
-		formApp.controller('formCtrl', formCtrl);
-
-		function formCtrl($scope, $window) {
-			$scope.test = "Form Controller";
-			$scope.isValidForm = function () {
-				alert("Will be submitted:\nFirst name: " + $scope.fName + ";\nSecond name: " + $scope.sName + ";\nE-mail: " + $scope.email);
-				$window.location = $window.location.href;
-			}
-		}
-	</script>
-</body>
-
-</html>
+			</div>
+			<!--scripts-->
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
+			<script type="text/javascript">
+				var formApp = angular.module("formApp", ["ngAnimate"]);
+				formApp.controller('formCtrl', formCtrl);
+				function formCtrl($scope, $window) {
+					$scope.test = "Form Controller";
+					$scope.isValidForm = function () {
+						alert("Will be submitted:\nFirst name: " + $scope.fName + ";\nSecond name: " + $scope.sName + ";\nE-mail: " + $scope.email);
+						$window.location = $window.location.href;
+					}
+					$scope.guestBook = function() {
+						alert("Works");
+					}
+				}
+			</script>
+		</body>
+	</html>
